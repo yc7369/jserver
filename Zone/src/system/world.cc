@@ -8,8 +8,8 @@
 *
 ================================================================*/
 #include "stdafx.h"
-
 #include "world.h"
+#include "zone_config.h"
 
 CWorld::CWorld()
 {

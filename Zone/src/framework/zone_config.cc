@@ -10,10 +10,12 @@
 
 
 #include "zone_config.h"
+#include "config_reader.h"
+#include "os_fs.h"
 
 ZoneConfig g_zone_config;
 
-bool LoadConfig(const char* file_name);
+bool LoadConfig(const char* file_name)
 {
 	ConfigReader reader;
 	if(!reader.SetSource(file_name))
