@@ -12,6 +12,7 @@ cc_binary(
 		'../../common/base',
 		'../../common/config',
 		'../../common/platform',
+		'../../common/jybase',
 
 		'../../Zone/src/framework',
 		'../../Zone/src/system',
@@ -22,6 +23,9 @@ cc_binary(
 	deps = [
 		'//common/config:config',	
 		'//common/platform:platform',
+		'//common/jybase:jybase',	
+		'//common/base:run_flags',	
+		
 	],
 	defs = [
 	],

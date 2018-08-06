@@ -8,8 +8,11 @@
 *
 ================================================================*/
 #include "stdafx.h"
+#include <sys/shm.h>
+
 #include "world.h"
 #include "zone_config.h"
+#include "run_flags.h"
 
 CWorld::CWorld()
 {
@@ -69,4 +72,49 @@ int CWorld::InitLog()
 {
 	
 	return 0;
+}
+
+CRunFlag g_run_flags;
+int CheckRunFlags()
+{
+    //优先检查 KICK QUIT 模式
+    if ( g_run_flags.IsFlagSet(FLAG_QUIT_AFTER_KICK_ALL_USER))
+    {
+        return FLAG_QUIT_AFTER_KICK_ALL_USER;
+    }
+    else if( g_run_flags.IsFlagSet( FLAG_QUIT_NORMAL) )
+    {
+        return FLAG_QUIT_NORMAL;
+	}
+#if 0
+	else if( g_run_flags.IsFlagSet( FLAG_QUIT_NORMAL))
+	{
+		//todo something.. not return!!!
+	}
+#endif
+    return FLAG_START_NORMAL;
+}
+
+
+int CWorld::Loop()
+{
+	for( ; ; )
+	{
+		//time update
+
+		//state check
+		if(CheckRunFlags() != FLAG_START_NORMAL)
+		{
+			break;	
+		}
+		
+		//logic
+		HandleAsynQueue();	
+	}
+	return 0;
+}
+
+void CWorld::HandleAsynQueue()
+{
+
 }

@@ -23,10 +23,13 @@ public:
 	int Prepare(bool isResume);
 	int InitConfig(const char* file_name);
 	int InitLog();
+	int Loop();
 	
 private:
 	int DoPrepare(bool isResume);
 	void ClearShm();
+
+	void HandleAsynQueue();
 	
 private:
 	time_t game_timer_;

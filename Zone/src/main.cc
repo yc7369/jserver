@@ -114,7 +114,6 @@ int ZonePrepare(bool is_resume)
 
     printf("zonesvrd prepare start ...\n");
 
-//    LOG_INFO("###### zonesvrd prepare start, %s mode ######", is_resume ? "Resume" : "Normal");
     if(CWorld::Instance().Prepare(is_resume) < 0)
     {
         printf("zonesvrd prepare failed,exit!");
@@ -122,6 +121,16 @@ int ZonePrepare(bool is_resume)
     }
 
     return 0;   
+}
+
+
+void MainLoop(bool isResume)
+{
+    printf("====== zonesvrd start success, %s mode ======\n", isResume ? "Resume" : "Normal");
+    
+    CWorld::Instance().Loop();
+    
+    return;
 }
 
 int main(int argc, char **argv)
@@ -142,7 +151,7 @@ int main(int argc, char **argv)
 
     g_zone_running = true;
 
-//    MainLoop(is_resume);
+    MainLoop(is_resume);
 
 //    ZoneExit();
 
