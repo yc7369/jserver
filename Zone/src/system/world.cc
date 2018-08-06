@@ -13,6 +13,8 @@
 #include "world.h"
 #include "zone_config.h"
 #include "run_flags.h"
+#include "world.h"
+#include "zone_config.h"
 
 CWorld::CWorld()
 {
@@ -118,3 +120,4 @@ void CWorld::HandleAsynQueue()
 {
 
 }
+

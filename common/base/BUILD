@@ -14,4 +14,3 @@ cc_library(
     srcs = 'run_flags.cc',
 )
 
-

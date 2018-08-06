@@ -11,12 +11,6 @@
 
 #pragma once
 
-#ifndef WIN32
-#else
-#define strcasecmp _stricmp
-#endif
-
-
 
 #ifndef SERVER_VERSION
 #define SERVER_VERSION "0.1"

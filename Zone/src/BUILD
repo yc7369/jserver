@@ -9,14 +9,14 @@ cc_binary(
 	],
 
 	incs = [
+		'../../Zone/src/framework',
+		'../../Zone/src/system',
+		'../../Zone/src/model',
+
 		'../../common/base',
 		'../../common/config',
 		'../../common/platform',
 		'../../common/jybase',
-
-		'../../Zone/src/framework',
-		'../../Zone/src/system',
-		'../../Zone/src/model',
 	
 	],
 
@@ -25,7 +25,6 @@ cc_binary(
 		'//common/platform:platform',
 		'//common/jybase:jybase',	
 		'//common/base:run_flags',	
-		
 	],
 	defs = [
 	],
