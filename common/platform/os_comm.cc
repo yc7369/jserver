@@ -23,6 +23,7 @@
 
 #include <sys/types.h>   
 #include <dirent.h>
+#include <signal.h>
 #endif
 
 
@@ -87,11 +88,9 @@ void IgnoreSignal(int sign)
     sigaction(sign, &sig, NULL);
 }
 
-
 //后台方式启动
 void InitDaemon()
 {
-#ifndef WIN32
     pid_t pid;
 
     if ((pid = fork()) != 0)
@@ -103,7 +102,6 @@ void InitDaemon()
         exit(0);
 
     umask(0); // clear our file mode creation mask
-#endif
 }
 
 bool createDir(const char *dirPath)
@@ -118,12 +116,7 @@ bool createDir(const char *dirPath)
         int ret = access(subPath.c_str(), 0);
         if (ret != 0)
         {
-#ifdef WIN32                                
-            ret = mkdir(subPath.c_str());
-#else
-            //                BXLOG("boxi", "real create dir = %s, flag = %d", subPath.c_str(), S_IRWXU | S_IRWXG);
             ret = mkdir(subPath.c_str(), 0777);
-#endif
             if (ret != 0)
             {
                 return false;
@@ -133,5 +126,4 @@ bool createDir(const char *dirPath)
     }
     return true;
 }
-
 

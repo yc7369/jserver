@@ -66,6 +66,7 @@ inline char* _ui64toa(unsigned long long num, char* buffer, int base = 10)
 #define snprintf _snprintf
 #include <io.h>
 #else
+//linux
 #include <unistd.h>
 #include <limits.h>
 #include <stdint.h>
@@ -87,7 +88,7 @@ void SleepMS(unsigned int ms);
 void SleepUS(unsigned long long us);
 
 void IgnorePipe();
-void IgnoreSignal(int sig);
+void IgnoreSignal(int sign);
 void InitDaemon();
 
 bool createDir(const char *dirPath);

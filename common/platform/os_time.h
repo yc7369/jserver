@@ -69,13 +69,6 @@ inline time_t GetTimeSec()
 
 inline int64 GetTimeMs()
 {
-/*	uint32 ms = 0;
- *
- *		struct timeb tp;
- *			ftime(&tp);
- *
- *				ms = (uint32)(tp.time * 1000 + tp.millitm);
- *				*/
 	timeval tv = GetTimeVal();
 	int64 ms = (int64)tv.tv_sec * 1000 + tv.tv_usec / 1000;
 
