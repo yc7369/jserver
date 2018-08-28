@@ -20,17 +20,20 @@ public:
 
 	static CWorld& Instance();	
 
-	int Prepare(bool isResume);
+	int Prepare(bool is_resume);
 	int InitConfig(const char* file_name);
 	int InitLog();
 	int Loop();
 	
 private:
-	int DoPrepare(bool isResume);
+	int DoPrepare(bool is_resume);
+	int Initialize(bool is_resume);
 	void ClearShm();
 
 	void HandleAsynQueue();
-	
+	void UpdateSocket();
+	int InitChannel();
+	bool InitSocket();	
 private:
 	time_t game_timer_;
 	int zone_id_;

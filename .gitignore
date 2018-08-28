@@ -2,3 +2,4 @@ build64_release/
 blade-bin
 .Building.lock
 .sconsign.dblite
+.vs

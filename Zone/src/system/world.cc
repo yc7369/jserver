@@ -29,11 +29,11 @@ CWorld& CWorld::Instance()
 	return g_world;
 }
 
-int CWorld::Prepare(bool isResume)
+int CWorld::Prepare(bool is_resume)
 {
-	if(DoPrepare(isResume) != 0)
+	if(DoPrepare(is_resume) != 0)
 	{
-		if(!isResume)
+		if(!is_resume)
 		{
 			ClearShm();
 		}
@@ -43,9 +43,13 @@ int CWorld::Prepare(bool isResume)
 	return 0;
 }
 
-int CWorld::DoPrepare(bool isResume)
+int CWorld::DoPrepare(bool is_resume)
 {
-
+	if(Initialize(is_resume) != 0)
+	{
+		return -1;
+	}
+	
 	return 0;
 }
 
@@ -109,7 +113,8 @@ int CWorld::Loop()
 		{
 			break;	
 		}
-		
+		UpdateSocket();	
+	
 		//logic
 		HandleAsynQueue();	
 	}
@@ -120,4 +125,37 @@ void CWorld::HandleAsynQueue()
 {
 
 }
+int Initialize(bool is_resume)
+{
+    // 其他初始化失败的信息
+    printf("\n\n########### Zone Server Starting ###########################\n\n");
 
+	if(InitChannel() < 0)
+	{
+		printf("init channel failed!");
+		return -1;
+	}
+	
+	if(!InitSocket())
+	{
+		printf("init socket failed!");
+		return -1;
+	}
+	return 0;
+}
+
+int InitChannel()
+{
+	return 0;
+}
+
+bool InitSocket()
+{
+	return true;
+}
+
+
+void CWorld::UpdateSocket()
+{
+
+}
