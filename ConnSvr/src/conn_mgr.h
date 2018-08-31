@@ -29,6 +29,10 @@ public:
 	bool InitChannel();
 	bool InitSocket();
 
+	time_t GetTime();
+	ConnConfig &GetConfig() { return config_; }
+
+
 	void UpdateSocket();
 	void Update();
 
@@ -43,6 +47,15 @@ public:
     virtual void HandleConnect(SocketManager *manager, hconn_t s);
     virtual bool CanAccept(SocketManager *manager, hconn_t listener, TcpSocket &ns);
     virtual void HandleAccept(SocketManager *manager, hconn_t listener, hconn_t ns);
+
+
+	void CheckDisconnectTimeOut();
+	void HandlerPkgFromZone();
+public:
+	//zone逻辑服相关
+	void NotifyZoneNormal(const ClientInfo &client, const char* pkg, int pkg_len);
+	void NotifyZoneNormal(const ClientInfo &client, const ConnAuthSig &conn_sig);
+	void NotifyZoneClose(const ClientInfo &client);
 
 private:
 

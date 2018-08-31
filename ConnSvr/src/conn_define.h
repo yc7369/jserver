@@ -13,6 +13,8 @@
 #include "stdafx.h"
 #include "socket_def.h"
 #include <string>
+#include "game_sid.h"
+
 using namespace std;
 
 enum
@@ -50,6 +52,8 @@ struct ClientInfo
 
 	hconn_t hconn_id;
 	int state;
+
+	time_t disconnect_time; //断连时间
 
     void SetState(int client_state){ state = client_state;}
     int GetState() const{return state;}

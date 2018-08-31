@@ -13,8 +13,9 @@ cc_binary(
 		'../../common/head',
 		'../../common/network',
 		'../../common/platform',
-		 '../../common/container',
+		'../../common/container',
 		'../../common/config',
+		'../../common/jybase',
 	],
 
 	deps = [

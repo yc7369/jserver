@@ -13,6 +13,9 @@
 #include "channel_def.h"
 #include "socket_manager.h"
 #include "config_reader.h"
+#include "conn_client_mgr.h"
+#include "os_time.h"
+#include "conn_head.h"
 
 ConnMgr::ConnMgr()
 :socket_manager_(NULL), cur_seq_(0), server_seq_(time(NULL)),is_shut_down_(false)
@@ -97,6 +100,10 @@ bool ConnMgr::InitSocket()
 	return true;
 }
 
+time_t ConnMgr::GetTime()
+{
+	return 0;//jy::time sys
+}
 void ConnMgr::CloseSocket(hconn_t s)
 {
 	socket_manager_->Close(s);
@@ -109,9 +116,60 @@ void ConnMgr::UpdateSocket()
 	//socket_manager_->GetHconnCount();
 }
 
+void ConnMgr::CheckDisconnectTimeOut()
+{
+	static int64 last_time = GetTimeMs();
+	int64 cur_time = GetTimeMs();
+
+	if (cur_time - last_time < 1000)
+	{
+		return;
+	}
+
+	last_time = cur_time;
+	int disconnect_count = 0;
+	vector<ClientInfo*> timeout_arr;
+	ConnClientMgr::Instance().CollectTimeOutClient(timeout_arr, disconnect_count);
+
+	for (unsigned int i = 0; i < timeout_arr.size(); i++)
+	{
+		ClientInfo *client = timeout_arr[i];
+		//notify close
+		
+	}
+}
+
+void ConnMgr::HandlerPkgFromZone()
+{
+	static int MAX_MSG_PROC_ONCE = 100;
+	static char buf[MAX_SERVER_PACK_LEN + sizeof(ConnMsgHead) + 10240];	//10240预留着
+	unsigned int node_len = 0;
+	int proc_msg_count = 0;
+	int conn_svr_head_len = 0;
+	while (true)
+	{
+		if (proc_msg_count >= MAX_MSG_PROC_ONCE && MAX_MSG_PROC_ONCE > 0)
+		{
+			break;
+		}
+
+		if (!channel_.RecvMgr(buf, node_len))
+		{
+			break;
+		}
+
+		++proc_msg_count;
+		conn_svr_head_len = 0;
+		static 
+
+	}
+
+}
+
 void ConnMgr::Update()
 {
 	UpdateSocket();
+	CheckDisconnectTimeOut();
 
 }
 

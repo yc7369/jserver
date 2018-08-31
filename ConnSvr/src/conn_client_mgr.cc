@@ -1,4 +1,5 @@
 #include"conn_client_mgr.h"
+#include "conn_mgr.h"
 
 int ConnClientMgr::GetClientCount() const
 {
@@ -43,4 +44,20 @@ void ConnClientMgr::EraseConnMap(unsigned int key)
 void ConnClientMgr::EraseGameMap(uint64 key)
 {
 	game_maps_.erase(key);
+}
+
+void ConnClientMgr::CollectTimeOutClient(vector<ClientInfo*> &timeout_arr, int disconnect_count)
+{
+	for (GameMap::iterator it = game_maps_.begin(); it != game_maps_.end(); ++it)
+	{
+		ClientInfo *client = it->second;
+		if (CLIENT_STATE_DISCONNECTED == client->GetState())
+		{
+			++disconnect_count;
+			if (ConnMgr::Instance().GetTime() - client->disconnect_time >= ConnMgr::Instance().GetConfig().wait_reconnect_timeout)
+			{
+				timeout_arr.push_back(client);
+			}
+		}
+	}
 }
