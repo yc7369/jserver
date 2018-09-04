@@ -6,7 +6,7 @@ cc_binary(
 		'conn_svr.cc',
 		'conn_mgr.cc',
 		'conn_client_mgr.cc',
-
+		'conn_svr_wrapper.cc',
 	],
 
 	incs = [
@@ -16,6 +16,7 @@ cc_binary(
 		'../../common/container',
 		'../../common/config',
 		'../../common/jybase',
+		'../../build64_release/Proto',
 	],
 
 	deps = [
@@ -23,6 +24,8 @@ cc_binary(
 		'//common/network:network',	
 		'//common/container:container',	
 		'//common/config:config',	
+		'//Proto:pb_proto',
+		'#protobuf'
 	],
 	
 )

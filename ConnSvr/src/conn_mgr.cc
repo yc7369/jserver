@@ -15,7 +15,7 @@
 #include "config_reader.h"
 #include "conn_client_mgr.h"
 #include "os_time.h"
-#include "conn_head.h"
+#include "conn_svr_wrapper.h"
 
 ConnMgr::ConnMgr()
 :socket_manager_(NULL), cur_seq_(0), server_seq_(time(NULL)),is_shut_down_(false)
@@ -135,7 +135,8 @@ void ConnMgr::CheckDisconnectTimeOut()
 	{
 		ClientInfo *client = timeout_arr[i];
 		//notify close
-		
+		NotifyZoneClose(*client);
+		DeleteClient(client);
 	}
 }
 
@@ -153,14 +154,16 @@ void ConnMgr::HandlerPkgFromZone()
 			break;
 		}
 
-		if (!channel_.RecvMgr(buf, node_len))
+		if (!channel_.RecvMsg(buf, node_len))
 		{
 			break;
 		}
 
 		++proc_msg_count;
 		conn_svr_head_len = 0;
-		static 
+		static CConnSvrWrapper conn_msg;
+		conn_msg.DecodeConnSvrHead(buf, node_len, conn_svr_head_len);
+		ConnSvrMsg &conn_svr_msg = conn_msg.GetConnSvrHead();
 
 	}
 
@@ -170,7 +173,7 @@ void ConnMgr::Update()
 {
 	UpdateSocket();
 	CheckDisconnectTimeOut();
-
+	HandlerPkgFromZone();
 }
 
 void ConnMgr::HandleClose(SocketManager *manager, hconn_t s, int close_reason)
@@ -189,6 +192,17 @@ bool ConnMgr::CanAccept(SocketManager *manager, hconn_t listener, TcpSocket &ns)
 }
 
 void ConnMgr::HandleAccept(SocketManager *manager, hconn_t listener, hconn_t ns)
+{
+
+}
+
+
+void ConnMgr::NotifyZoneClose(const ClientInfo &client)
+{
+
+}
+
+void ConnMgr::DeleteClient(ClientInfo *client)
 {
 
 }

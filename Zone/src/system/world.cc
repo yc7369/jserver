@@ -125,7 +125,7 @@ void CWorld::HandleAsynQueue()
 {
 
 }
-int Initialize(bool is_resume)
+int CWorld::Initialize(bool is_resume)
 {
     // 其他初始化失败的信息
     printf("\n\n########### Zone Server Starting ###########################\n\n");
@@ -144,12 +144,12 @@ int Initialize(bool is_resume)
 	return 0;
 }
 
-int InitChannel()
+int CWorld::InitChannel()
 {
 	return 0;
 }
 
-bool InitSocket()
+bool CWorld::InitSocket()
 {
 	return true;
 }

@@ -1,0 +1,76 @@
+package Pb;
+
+
+enum ConnCmd
+{
+    CONN_CMD_START         = 1;   //新用户连接
+    CONN_CMD_STOP          = 2;   //用户断连
+    CONN_CMD_NORMAL        = 3;   //用户正常消息
+    CONN_CMD_BROADCAST_MSG = 4;   //zone向client发送广播消息
+    CONN_CMD_RECONN        = 5;   //客户端重新连接
+    CONN_CMD_ZONE_SHUTDOWN = 6;   //zone向conn通知自己已经关闭
+    CONN_CMD_REQ_RELAY     = 7;   //请求relay，connsvr发起
+    CONN_CMD_NOTIFY_RELAY  = 8;   //通知relay，zonesvr发起  
+}
+
+message ConnExtStart
+{
+    optional int32  channel    = 1;   //平台类型
+    optional bytes  uid        = 2;   //平台帐号
+    optional uint32 ip         = 3;   //ip
+    optional uint32 port       = 4;   //端口
+    optional uint32 create_seq = 5;   //创建序号，用于判断是否是同一个连接
+    optional uint32 recv_time  = 6;
+}
+
+enum StopReason
+{
+    STOP_REASON_ZONE_PLAYER_IS_FULL = 100;
+    STOP_REASON_ZONE_RELAY_FAILED   = 101;
+}
+
+message ConnExtStop
+{
+    optional int32 reason = 1;
+    optional bytes msg    = 2;
+}
+
+message ConnExtNormal
+{
+    optional int32 reserve = 1;
+}
+
+message ConnExtReconn
+{
+    optional int32 create_seq = 1;
+}
+
+message ConnExtBroadcast
+{
+    repeated uint64 game_id_list = 1;
+}
+
+message ConnExtZoneShutDown
+{
+    optional int32 reserve = 1;
+}
+
+message ConnExtNotifyRelay
+{
+    optional uint64 role_id = 1;   //角色role_id
+    optional uint32 uin     = 2;   //角色uin
+    optional uint64 game_id = 3; //conn->zone
+    optional int32  result  = 4; //conn->zone   
+    optional uint64 encrypt_code = 5; //conn加密校验
+}
+
+message ConnExtReqRelay
+{
+    optional uint32 uin     = 1;
+    optional uint64 role_id = 2; 
+    optional uint64 game_id = 3;
+    optional uint32 ip      = 4;
+    optional uint32 port    = 5;
+    optional uint32 create_seq = 6;
+    optional uint32 recv_time  = 7;
+}
