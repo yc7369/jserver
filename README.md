@@ -1,5 +1,5 @@
 # jserver
-Jserver is a kind of Linux high-performance server.
+this server is a kind of Linux high-performance server.
 Many of the code is the same as my previous project，I still knocked them out again，Although there are still some code are copyed，like some class variables name begin with m_. Maybe will make some bugs, I will try to do it well.
 
 This project build by typhoon blade.(https://github.com/chen3feng/typhoon-blade)
